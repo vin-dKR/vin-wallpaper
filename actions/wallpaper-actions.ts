@@ -1,0 +1,65 @@
+// actions/wallpaper-actions.ts
+'use server';
+
+import { WallpaperBot } from '@/lib/twitter-bot';
+
+export async function postWallpaper() {
+    try {
+        const bot = new WallpaperBot();
+        const result = await bot.postWallpaper();
+
+        if (result.success) {
+            return {
+                success: true,
+                message: 'Wallpaper posted successfully',
+                tweetId: result.tweetId,
+            };
+        } else {
+            return {
+                success: false,
+                error: result.error || 'Failed to post wallpaper',
+            };
+        }
+    } catch (error) {
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+        };
+    }
+}
+
+export async function autoPostWallpaper(cronSecret: string) {
+    if (cronSecret !== process.env.CRON_SECRET) {
+        return {
+            success: false,
+            error: 'Unauthorized',
+        };
+    }
+
+    try {
+        const bot = new WallpaperBot();
+        const result = await bot.postWallpaper();
+
+        if (result.success) {
+            console.log(`Auto-posted wallpaper: ${result.tweetId}`);
+            return {
+                success: true,
+                message: 'Auto-post successful',
+                tweetId: result.tweetId,
+                timestamp: new Date().toISOString(),
+            };
+        } else {
+            console.error('Auto-post failed:', result.error);
+            return {
+                success: false,
+                error: result.error || 'Failed to auto-post wallpaper',
+            };
+        }
+    } catch (error) {
+        console.error('Auto-post error:', error);
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+        };
+    }
+}
