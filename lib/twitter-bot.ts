@@ -1,5 +1,6 @@
 import { TwitterApi } from 'twitter-api-v2';
-import { InferenceClient } from '@huggingface/inference';
+import Replicate from 'replicate';
+import sharp from 'sharp';
 
 interface WallpaperPrompt {
     text: string;
@@ -21,11 +22,11 @@ interface PostResult {
 
 export class WallpaperBot {
     private twitterClient: TwitterApi;
-    private inferenceClient: InferenceClient;
+    private replicate: Replicate;
     private wallpaperPrompts: WallpaperPrompt[];
 
     constructor() {
-        if (!process.env.TWITTER_API_KEY || !process.env.HUGGINGFACE_TOKEN) {
+        if (!process.env.TWITTER_API_KEY || !process.env.REPLICATE_API_TOKEN) {
             throw new Error('Missing required environment variables');
         }
 
@@ -36,23 +37,24 @@ export class WallpaperBot {
             accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
         });
 
-        this.inferenceClient = new InferenceClient(process.env.HUGGINGFACE_TOKEN!);
-        console.log("HuggingFace Inference Client initialized for black-forest-labs/FLUX.1-dev");
+        this.replicate = new Replicate({
+            auth: process.env.REPLICATE_API_TOKEN!,
+        });
 
         this.wallpaperPrompts = [
-            { text: "stunning mountain landscape at sunset, 4k wallpaper, cinematic lighting", category: "nature" },
-            { text: "cyberpunk city skyline at night, neon lights, futuristic wallpaper", category: "cyberpunk" },
-            { text: "peaceful forest path with sunlight filtering through trees, nature wallpaper", category: "nature" },
-            { text: "abstract geometric patterns, colorful, modern wallpaper design", category: "abstract" },
-            { text: "ocean waves crashing on rocks, dramatic sky, landscape wallpaper", category: "nature" },
-            { text: "space galaxy with stars and nebula, cosmic wallpaper, deep space", category: "space" },
-            { text: "minimalist geometric shapes, clean design, desktop wallpaper", category: "minimal" },
-            { text: "tropical beach paradise, palm trees, crystal clear water, vacation wallpaper", category: "nature" },
-            { text: "autumn forest with colorful leaves, scenic nature wallpaper", category: "nature" },
-            { text: "urban architecture, modern buildings, city wallpaper photography", category: "urban" },
-            { text: "northern lights aurora borealis, starry night sky, magical wallpaper", category: "space" },
-            { text: "japanese zen garden, peaceful meditation, minimalist wallpaper", category: "minimal" },
-        ];
+            { text: "iridescent alien forest with glowing mushrooms and floating orbs, ethereal 4k mobile wallpaper", category: "surreal" },
+            { text: "neon-infused samurai duel under a blood-red moon, dynamic cyberpunk mobile wallpaper", category: "cyberpunk" },
+            { text: "interstellar aurora borealis swirling around a black hole, cosmic 4k mobile wallpaper", category: "space" },
+            { text: "mythical ice dragon weaving through a neon-frosted tundra, epic 4k mobile wallpaper", category: "fantasy" },
+            { text: "vibrant glitch mandala with pulsating neon patterns, hypnotic 4k mobile wallpaper", category: "abstract" },
+            { text: "retro synthwave beach with glowing palm trees and a pixelated sunset, vibrant mobile wallpaper", category: "retro" },
+            { text: "surreal neon labyrinth with floating mirrors and glowing vines, ultra-detailed 4k mobile wallpaper", category: "surreal" },
+            { text: "cybernetic phoenix in a holographic data storm, futuristic 4k mobile wallpaper", category: "cyberpunk" },
+            { text: "cosmic kaleidoscope of glowing comets and fractal stars, vibrant 4k mobile wallpaper", category: "space" },
+            { text: "enchanted neon cherry blossom forest with glowing petals, dreamy 4k mobile wallpaper", category: "fantasy" },
+            { text: "digital mosaic of neon waves crashing on a pixel shore, bold 4k mobile wallpaper", category: "abstract" },
+            { text: "vaporwave arcade city with glowing retro signs and pastel holograms, vibrant mobile wallpaper", category: "retro" }
+        ]
     }
 
     private getRandomElement<T>(array: T[]): T {
@@ -62,57 +64,55 @@ export class WallpaperBot {
     private async generateWallpaper(): Promise<GenerationResult> {
         try {
             const promptObj = this.getRandomElement(this.wallpaperPrompts);
-            const enhancedPrompt = `${promptObj.text}, portrait wallpaper, high resolution, detailed, professional quality, sharp focus`;
+            const enhancedPrompt = `${promptObj.text}, high resolution, detailed, professional quality, sharp focus`;
             console.log(`Generating wallpaper with prompt: ${enhancedPrompt}`);
 
-            // Generate image using FLUX.1-dev via fal-ai
-            const imageResult = await this.inferenceClient.textToImage({
-                provider: "fal-ai",
-                model: "black-forest-labs/FLUX.1-dev",
-                inputs: enhancedPrompt,
-                parameters: {
-                    num_inference_steps: 25,
-                    guidance_scale: 7.5,
-                    width: 1179,
-                    height: 2556,
-                }
-            }) as string | Blob; // Type assertion to handle string or Blob
-
-            let imageBuffer: Buffer;
-
-            // Log the result type and content for debugging
-            console.log('Image result type:', typeof imageResult, 'Value:', imageResult);
-
-            if (typeof imageResult === 'string') {
-                console.log('Image result is a string, processing...');
-                if (imageResult.startsWith('data:image')) {
-                    // Handle base64 string
-                    const base64Data = imageResult.split(',')[1];
-                    imageBuffer = Buffer.from(base64Data, 'base64');
-                    console.log('Processed base64 string to Buffer');
-                } else if (imageResult.startsWith('http')) {
-                    // Handle URL
-                    console.log(`Fetching image from URL: ${imageResult}`);
-                    const response = await fetch(imageResult, {
-                        headers: { 'Authorization': `Bearer ${process.env.HUGGINGFACE_TOKEN}` }
-                    });
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch image from URL: ${response.status} - ${await response.text()}`);
+            // Generate image using Stable Diffusion via Replicate
+            const output = await this.replicate.run(
+                "stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b",
+                {
+                    input: {
+                        prompt: enhancedPrompt,
+                        width: 1080,
+                        height: 2400,
+                        num_outputs: 1,
+                        scheduler: "K_EULER",
+                        num_inference_steps: 50,
+                        guidance_scale: 7.5,
+                        refine: "expert_ensemble_refiner",
+                        high_noise_frac: 0.8,
                     }
-                    const arrayBuffer = await response.arrayBuffer();
-                    imageBuffer = Buffer.from(arrayBuffer);
-                    console.log('Fetched and converted URL to Buffer');
-                } else {
-                    throw new Error('Invalid string format: not a base64 string or URL');
                 }
-            } else if (imageResult instanceof Blob) {
-                // Handle Blob
-                console.log('Image result is a Blob, converting to Buffer');
-                const arrayBuffer = await imageResult.arrayBuffer();
-                imageBuffer = Buffer.from(arrayBuffer);
-            } else {
-                throw new Error('Unexpected image result type: not a string or Blob');
+            );
+
+            if (!output || !Array.isArray(output) || output.length === 0) {
+                throw new Error('No image generated');
             }
+
+            const imageUrl = output[0];
+            console.log('Generated image URL:', imageUrl);
+
+            // Download the image
+            const response = await fetch(imageUrl);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch image: ${response.statusText}`);
+            }
+
+            const arrayBuffer = await response.arrayBuffer();
+            let imageBuffer = Buffer.from(arrayBuffer) as Buffer;
+
+            // Ensure image is exactly 1080x2400 using sharp
+            imageBuffer = await sharp(imageBuffer)
+                .resize({
+                    width: 1080,
+                    height: 2400,
+                    fit: 'cover',
+                    position: 'center'
+                })
+                .jpeg({ quality: 90 })
+                .toBuffer();
+
+            console.log('Image resized to 1080x2400 for mobile wallpaper');
 
             return {
                 success: true,
@@ -123,25 +123,17 @@ export class WallpaperBot {
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'Unknown error';
             console.error(`Image generation failed: ${errorMessage}`);
-            let detailedError = errorMessage;
-            if (errorMessage.includes('401') || errorMessage.includes('403')) {
-                detailedError = 'Invalid or unauthorized Hugging Face token. Please check HUGGINGFACE_TOKEN and ensure it has fal-ai access.';
-            } else if (errorMessage.includes('429')) {
-                detailedError = 'Rate limit exceeded for fal-ai/FLUX.1-dev. Try spacing out requests or upgrading to a paid plan.';
-            } else if (errorMessage.includes('503')) {
-                detailedError = 'Model black-forest-labs/FLUX.1-dev temporarily unavailable. Retry later or check Hugging Face API status.';
-            }
             return {
                 success: false,
-                error: `Image generation failed for black-forest-labs/FLUX.1-dev: ${detailedError}`
+                error: `Image generation failed: ${errorMessage}`
             };
         }
     }
 
     private createTweetText(): string {
         const hashtags = [
-            '#Wallpaper', '#AIArt', '#DigitalArt', '#AIGenerated',
-            '#Desktop', '#Background', '#Art', '#AI', '#Tech', '#Creative'
+            '#MobileWallpaper', '#AIArt', '#DigitalArt', '#AIGenerated',
+            '#PhoneWallpaper', '#Background', '#Art', '#AI', '#Tech', '#Creative'
         ];
 
         const selectedHashtags = hashtags
@@ -151,11 +143,11 @@ export class WallpaperBot {
         const hashtagText = selectedHashtags.join(' ');
 
         const tweetTexts = [
-            `Fresh AI-generated wallpaper for your desktop! 🎨✨\n\n${hashtagText}`,
-            `New wallpaper drop! Created with AI magic 🖼️🤖\n\n${hashtagText}`,
-            `Transform your desktop with this AI masterpiece! 🌟\n\n${hashtagText}`,
-            `Daily dose of AI art for your screen! 💻🎨\n\n${hashtagText}`,
-            `Fresh wallpaper, hot off the AI press! 🔥\n\n${hashtagText}`,
+            `Insane AI-generated mobile wallpaper! 📱🔥\n\n${hashtagText}`,
+            `New crazy phone wallpaper drop! Created with AI magic 🎨🤖\n\n${hashtagText}`,
+            `Transform your phone with this wild AI masterpiece! 🌟\n\n${hashtagText}`,
+            `Epic AI art for your mobile screen! 💥📱\n\n${hashtagText}`,
+            `Fresh, bold wallpaper for your phone! 🔥\n\n${hashtagText}`,
         ];
 
         return this.getRandomElement(tweetTexts);

@@ -1,7 +1,28 @@
-// actions/wallpaper-actions.ts
 'use server';
 
 import { WallpaperBot } from '@/lib/twitter-bot';
+import { randomInt } from 'crypto';
+
+function generateRandomTimes(): { hour1: number; hour2: number } {
+    // Generate two random hours between 0-23, ensuring they're at least 6 hours apart
+    let hour1 = randomInt(0, 24);
+    let hour2 = randomInt(0, 24);
+    
+    while (Math.abs(hour1 - hour2) < 6) {
+        hour2 = randomInt(0, 24);
+    }
+    
+    return { hour1, hour2 };
+}
+
+let scheduledTimes: { hour1: number; hour2: number } | null = null;
+
+export async function getScheduledTimes() {
+    if (!scheduledTimes) {
+        scheduledTimes = generateRandomTimes();
+    }
+    return scheduledTimes;
+}
 
 export async function postWallpaper() {
     try {
