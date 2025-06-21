@@ -15,11 +15,12 @@ function generateRandomTimes(): { hour1: number; hour2: number } {
     return { hour1, hour2 };
 }
 
-let scheduledTimes: { hour1: number; hour2: number } | null = null;
+let scheduledTimes: { hour1: number; hour2: number; } | null = null;
 
 export async function getScheduledTimes() {
     if (!scheduledTimes) {
         scheduledTimes = generateRandomTimes();
+        console.log(`[SCHEDULER] New random schedule set for (UTC): ${scheduledTimes.hour1}:00 and ${scheduledTimes.hour2}:00`);
     }
     return scheduledTimes;
 }

@@ -4,26 +4,43 @@ import { autoPostWallpaper, getScheduledTimes } from '@/actions/wallpaper-action
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const cronSecret = searchParams.get('secret');
-    const checkSchedule = searchParams.get('check') === 'true';
 
-    if (checkSchedule) {
-        const times = await getScheduledTimes();
-        return NextResponse.json({
-            success: true,
-            scheduledTimes: {
-                firstPost: `${times.hour1}:00`,
-                secondPost: `${times.hour2}:00`
-            }
-        });
-    }
-
-    if (!cronSecret) {
+    // Always check for the secret first.
+    if (cronSecret !== process.env.CRON_SECRET) {
         return NextResponse.json(
-            { success: false, error: 'Missing cron secret' },
+            { success: false, error: 'Unauthorized or missing cron secret' },
             { status: 401 }
         );
     }
 
-    const result = await autoPostWallpaper(cronSecret);
-    return NextResponse.json(result);
-} 
+    const times = await getScheduledTimes();
+    const currentHour = new Date().getUTCHours();
+
+    console.log(`[CRON] Hourly check. Current UTC Hour: ${currentHour}. Scheduled Hours: ${times.hour1}, ${times.hour2}.`);
+
+    // Check if the current hour matches either of the scheduled hours.
+    const shouldPost = (currentHour === times.hour1 || currentHour === times.hour2);
+
+    if (shouldPost) {
+        console.log(`[CRON] Time matched (${currentHour}:00 UTC). Attempting to post wallpaper...`);
+        try {
+            const result = await autoPostWallpaper(cronSecret);
+
+            if (result.success) {
+                console.log(`[CRON] SUCCESS: Wallpaper posted successfully. Tweet ID: ${result.tweetId}`);
+            } else {
+                console.error(`[CRON] FAILURE: The autoPostWallpaper action failed. Reason: ${result.error}`);
+            }
+            return NextResponse.json(result);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error during post attempt';
+            console.error(`[CRON] CRITICAL FAILURE: An unexpected error occurred. Error: ${errorMessage}`);
+            return NextResponse.json(
+                { success: false, error: `Critical error during auto-post: ${errorMessage}` },
+                { status: 500 }
+            );
+        }
+    } else {
+        return NextResponse.json({ success: true, message: "Not a scheduled hour to post." });
+    }
+}

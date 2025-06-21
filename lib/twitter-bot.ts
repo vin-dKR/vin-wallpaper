@@ -42,19 +42,37 @@ export class WallpaperBot {
         });
 
         this.wallpaperPrompts = [
-            { text: "iridescent alien forest with glowing mushrooms and floating orbs, ethereal 4k mobile wallpaper", category: "surreal" },
-            { text: "neon-infused samurai duel under a blood-red moon, dynamic cyberpunk mobile wallpaper", category: "cyberpunk" },
-            { text: "interstellar aurora borealis swirling around a black hole, cosmic 4k mobile wallpaper", category: "space" },
-            { text: "mythical ice dragon weaving through a neon-frosted tundra, epic 4k mobile wallpaper", category: "fantasy" },
-            { text: "vibrant glitch mandala with pulsating neon patterns, hypnotic 4k mobile wallpaper", category: "abstract" },
-            { text: "retro synthwave beach with glowing palm trees and a pixelated sunset, vibrant mobile wallpaper", category: "retro" },
-            { text: "surreal neon labyrinth with floating mirrors and glowing vines, ultra-detailed 4k mobile wallpaper", category: "surreal" },
-            { text: "cybernetic phoenix in a holographic data storm, futuristic 4k mobile wallpaper", category: "cyberpunk" },
-            { text: "cosmic kaleidoscope of glowing comets and fractal stars, vibrant 4k mobile wallpaper", category: "space" },
-            { text: "enchanted neon cherry blossom forest with glowing petals, dreamy 4k mobile wallpaper", category: "fantasy" },
-            { text: "digital mosaic of neon waves crashing on a pixel shore, bold 4k mobile wallpaper", category: "abstract" },
-            { text: "vaporwave arcade city with glowing retro signs and pastel holograms, vibrant mobile wallpaper", category: "retro" }
-        ]
+            // 🌸 Beautiful Girls (Realistic, Aesthetic)
+            { text: "portrait of a beautiful woman, soft lighting, pastel colors, ultra-clear focus, aesthetic composition, elegant pose, 8k", category: "beautiful-girls" },
+            { text: "close-up of a serene woman in a field of flowers, golden hour, warm tones, natural makeup, dreamy atmosphere, bokeh, 4k", category: "beautiful-girls" },
+            { text: "girl with flowing hair standing on a beach during sunset, cinematic lighting, peaceful expression, highly detailed, 4k", category: "beautiful-girls" },
+            { text: "mystical girl in a forest with glowing lights, fantasy vibe, ethereal lighting, soft tones, ultra HD", category: "beautiful-girls" },
+
+            // 🎨 Anime
+            { text: "anime girl looking at stars, neon-lit cityscape, soft shading, high contrast, 4k anime art style, clear focus", category: "anime" },
+            { text: "anime couple holding hands under cherry blossoms, spring vibes, cinematic blur, aesthetic color palette, 4k", category: "anime" },
+            { text: "anime-style warrior girl with glowing sword, clean cyberpunk background, detailed armor, high definition", category: "anime" },
+            { text: "studio Ghibli-inspired scenery with anime girl, peaceful village, vivid color scheme, soft brush strokes", category: "anime" },
+
+            // 🦸 MCU-Inspired
+            { text: "heroic character standing on rooftop, city behind them, inspired by MCU tone, dramatic lighting, cinematic wallpaper, 4k", category: "mcu" },
+            { text: "futuristic armor glowing with power, sleek design, Marvel superhero vibes, dark background, high resolution", category: "mcu" },
+            { text: "mysterious female vigilante in silhouette, neon cityscape, MCU inspired, sharp contrast, minimalist style", category: "mcu" },
+            { text: "aesthetic portrait of a superhero girl with wind in hair, dynamic pose, inspired by Marvel look, ultra-detailed", category: "mcu" },
+
+            // 📸 Aesthetic Photography
+            { text: "aesthetic photo of coffee and book near window, moody lighting, cozy vibe, high detail, clean composition", category: "aesthetic-photo" },
+            { text: "minimalist sunset over calm lake, pastel sky, symmetrical composition, peaceful aesthetic, ultra clear", category: "aesthetic-photo" },
+            { text: "girl walking through empty street at dusk, aesthetic outfit, bokeh lights, city vibe, cinematic framing", category: "aesthetic-photo" },
+            { text: "top-down shot of organized desk setup, soft light, neutral tones, aesthetic workspace, crisp quality", category: "aesthetic-photo" },
+
+            // 🧘 General Aesthetic & Clean Prompts
+            { text: "surreal dreamscape with floating islands, vivid colors, clean rendering, perfect symmetry, 4k fantasy art", category: "aesthetic" },
+            { text: "elegant landscape with soft gradients and clouds, simple color palette, calming tones, minimalism", category: "aesthetic" },
+            { text: "nature scene with flowers, butterflies, and sunlight, high clarity, warm tones, smooth details", category: "aesthetic" },
+            { text: "ultra-aesthetic abstract waves in pastel tones, 3D render style, smooth gradients, ultra HD", category: "aesthetic" }
+        ];
+
     }
 
     private getRandomElement<T>(array: T[]): T {
