@@ -38,9 +38,34 @@ export async function GET(request: Request) {
     const now = new Date();
     const { hour1, hour2 } = getDeterministicHours(now, secretEnv);
 
+    const calculateRemainingTime = (targetHour: number) => {
+        const now = new Date();
+        const nextPostDate = new Date();
+        nextPostDate.setUTCHours(targetHour, 0, 0, 0);
+
+        // If the target hour has already passed for today, set it for tomorrow.
+        if (nextPostDate.getTime() < now.getTime()) {
+            nextPostDate.setDate(nextPostDate.getDate() + 1);
+        }
+
+        const diff = nextPostDate.getTime() - now.getTime();
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        return {
+            hours,
+            minutes,
+            message: `${hours} hours and ${minutes} minutes`
+        };
+    };
+
     return NextResponse.json({
         success: true,
-        scheduledUTCHours: [hour1, hour2],
+        scheduledUTCHours: [hour1, hour2].sort((a, b) => a - b),
+        timeRemaining: {
+            post1: calculateRemainingTime(hour1),
+            post2: calculateRemainingTime(hour2)
+        },
         message: `Posts for today are scheduled to run at ${hour1}:00 and ${hour2}:00 UTC.`
     });
 } 
