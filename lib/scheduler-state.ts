@@ -6,7 +6,8 @@ interface ScheduledTimes {
     hour2: number;
 }
 
-const tmpDir = path.join(process.cwd(), '.tmp');
+// In serverless environments like Vercel, only the /tmp directory is writable.
+const tmpDir = '/tmp';
 const scheduleFilePath = path.join(tmpDir, 'schedule.json');
 
 // Helper function to ensure the .tmp directory exists.
