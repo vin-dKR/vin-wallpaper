@@ -28,12 +28,13 @@ export async function postWallpaper() {
 }
 
 export async function autoPostWallpaper() {
+    console.log('[Action] autoPostWallpaper action initiated.');
     try {
         const bot = new WallpaperBot();
         const result = await bot.postWallpaper();
 
         if (result.success) {
-            console.log(`Auto-posted wallpaper: ${result.tweetId}`);
+            console.log(`[Action] autoPostWallpaper action successful. Tweet ID: ${result.tweetId}`);
             return {
                 success: true,
                 message: 'Auto-post successful',
@@ -41,17 +42,18 @@ export async function autoPostWallpaper() {
                 timestamp: new Date().toISOString(),
             };
         } else {
-            console.error('Auto-post failed:', result.error);
+            console.error(`[Action] autoPostWallpaper action failed:`, result.error);
             return {
                 success: false,
                 error: result.error || 'Failed to auto-post wallpaper',
             };
         }
     } catch (error) {
-        console.error('Auto-post error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        console.error(`[Action] CRITICAL ERROR in autoPostWallpaper action: ${errorMessage}`);
         return {
             success: false,
-            error: error instanceof Error ? error.message : 'Unknown error',
+            error: errorMessage,
         };
     }
 }
