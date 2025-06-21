@@ -1,78 +1,67 @@
 // This function runs once when the server starts.
 export async function register() {
-    // We only want to schedule jobs in a production-like environment, not during development builds.
     if (process.env.NEXT_RUNTIME === 'nodejs') {
-        // Dynamically import server-only modules to prevent them from being bundled on the client.
         const cron = (await import('node-cron')).default;
         const { autoPostWallpaper } = await import('./actions/wallpaper-actions');
         const { randomInt } = await import('crypto');
-        const { setScheduledTimes } = await import('./lib/scheduler-state');
+        const { setScheduledTimes, getScheduledTimes } = await import('./lib/scheduler-state');
+
+        // --- FOR TESTING: Schedule posts for 2 and 5 minutes from now ---
+        const now = new Date();
+        const testTime1 = new Date(now.getTime() + 2 * 60 * 1000); // 2 minutes from now
+        const testTime2 = new Date(now.getTime() + 5 * 60 * 1000); // 5 minutes from now
         
-        // --- PRODUCTION LOGIC ---
-        
-        // 1. Generate two random hours for the day, at least 6 hours apart.
-        const hour1 = randomInt(0, 24);
-        let hour2 = randomInt(0, 24);
-        while (Math.abs(hour1 - hour2) < 6) {
-            hour2 = randomInt(0, 24);
-        }
+        // This is a special, one-time test schedule.
+        const testSchedule = {
+            hour1: testTime1.getHours(),
+            minute1: testTime1.getMinutes(),
+            hour2: testTime2.getHours(),
+            minute2: testTime2.getMinutes(),
+        };
 
-        // 2. Store the generated times in our shared state.
-        await setScheduledTimes({ hour1, hour2 });
+        // For testing, we need a cron job that runs EVERY MINUTE.
+        cron.schedule('* * * * *', async () => {
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            const currentMinute = currentTime.getMinutes();
 
-        // 3. Schedule a task to run every hour, at the start of the hour.
-        cron.schedule('0 * * * *', async () => {
-            const currentHour = new Date().getUTCHours();
-            console.log(`[Scheduler] Hourly check. Current UTC hour: ${currentHour}.`);
+            console.log(`[TEST-Scheduler] Minute check. Current local time: ${currentHour}:${currentMinute}.`);
 
-            // 4. Check if the current hour is one of our scheduled hours.
-            if (currentHour === hour1 || currentHour === hour2) {
-                console.log(`[Scheduler] It's time to post! Triggering wallpaper post for ${currentHour}:00 UTC.`);
+            const isTimeForPost1 = (currentHour === testSchedule.hour1 && currentMinute === testSchedule.minute1);
+            const isTimeForPost2 = (currentHour === testSchedule.hour2 && currentMinute === testSchedule.minute2);
+
+            if (isTimeForPost1 || isTimeForPost2) {
+                console.log(`[TEST-Scheduler] It's time to post! Triggering wallpaper post.`);
                 try {
-                    // The internal call does not need a secret.
                     const result = await autoPostWallpaper();
                     if (result.success) {
-                        console.log(`[Scheduler] SUCCESS: Wallpaper posted. Tweet ID: ${result.tweetId}`);
+                        console.log(`[TEST-Scheduler] SUCCESS: Test wallpaper posted.`);
                     } else {
-                        console.error(`[Scheduler] FAILURE: The post action failed. Reason: ${result.error}`);
+                        console.error(`[TEST-Scheduler] FAILURE: Test post action failed.`);
                     }
                 } catch (error) {
-                    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                    console.error(`[Scheduler] CRITICAL FAILURE: An unexpected error occurred. Error: ${errorMessage}`);
+                    console.error(`[TEST-Scheduler] CRITICAL FAILURE during test post.`);
                 }
             }
         });
         
-
-        // --- LOCAL TEST LOGIC (Now disabled) ---
-        /*
-        console.log('[Scheduler] TEST MODE: Scheduling a one-time post for 1 minute from now.');
+        // --- FOR TESTING: Schedule a "daily" re-schedule for 7 minutes from now ---
+        const rescheduleTime = new Date(now.getTime() + 7 * 60 * 1000); // 7 minutes from now
+        const cronPatternForReschedule = `${rescheduleTime.getMinutes()} ${rescheduleTime.getHours()} * * *`;
         
-        const postTime = new Date(new Date().getTime() + 1 * 60 * 1000);
-        const minute = postTime.getMinutes();
-        const hour = postTime.getHours();
-        const cronPattern = `${minute} ${hour} * * *`;
-
-        console.log(`[Scheduler] Test job will run at (local server time): ${hour}:${minute.toString().padStart(2, '0')}`);
-
-        const task = cron.schedule(cronPattern, async () => {
-            console.log("[Scheduler] TEST JOB TRIGGERED: It's time to post!");
-            try {
-                // Correct call with no arguments.
-                const result = await autoPostWallpaper();
-                if (result.success) {
-                    console.log(`[Scheduler] TEST SUCCESS: Wallpaper posted. Tweet ID: ${result.tweetId}`);
-                } else {
-                    console.error(`[Scheduler] TEST FAILURE: The post action failed. Reason: ${result.error}`);
-                }
-            } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                console.error(`[Scheduler] TEST CRITICAL FAILURE: An unexpected error occurred. Error: ${errorMessage}`);
+        cron.schedule(cronPatternForReschedule, async () => {
+            console.log("[TEST-Scheduler] It's 'midnight'! Regenerating schedule with random times for the 'next day'.");
+            const hour1 = randomInt(0, 24);
+            let hour2 = randomInt(0, 24);
+            while (Math.abs(hour1 - hour2) < 6) {
+                hour2 = randomInt(0, 24);
             }
-            // Stop the task so it doesn't run again tomorrow.
-            task.stop();
-            console.log('[Scheduler] Test job has run and is now stopped.');
+            await setScheduledTimes({ hour1, hour2 });
+            console.log("[TEST-Scheduler] New random schedule has been saved. The hourly production checker will now use these times.");
         });
-        */
+
+        console.log(`[TEST-Scheduler] Test post 1 scheduled for local time: ${testSchedule.hour1}:${testSchedule.minute1}`);
+        console.log(`[TEST-Scheduler] Test post 2 scheduled for local time: ${testSchedule.hour2}:${testSchedule.minute2}`);
+        console.log(`[TEST-Scheduler] Daily re-schedule is set for local time: ${rescheduleTime.getHours()}:${rescheduleTime.getMinutes()}`);
     }
 }
