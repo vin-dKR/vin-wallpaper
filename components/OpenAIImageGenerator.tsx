@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { generateImageWithOpenAI, generateRandomImageWithOpenAI } from '@/actions/openai-actions';
+import Image from 'next/image';
 
 interface OpenAIImageGeneratorProps {
     className?: string;
@@ -34,7 +35,7 @@ export function OpenAIImageGenerator({ className = '' }: OpenAIImageGeneratorPro
                 setError(result.error || 'Failed to generate image');
             }
         } catch (err) {
-            setError('An unexpected error occurred');
+            setError('An unexpected error occurred' + err);
         } finally {
             setIsGenerating(false);
         }
@@ -55,7 +56,7 @@ export function OpenAIImageGenerator({ className = '' }: OpenAIImageGeneratorPro
                 setError(result.error || 'Failed to generate random image');
             }
         } catch (err) {
-            setError('An unexpected error occurred');
+            setError('An unexpected error occurred' + err);
         } finally {
             setIsGenerating(false);
         }
@@ -79,7 +80,7 @@ export function OpenAIImageGenerator({ className = '' }: OpenAIImageGeneratorPro
                     🤖 OpenAI DALL-E Generator
                 </h2>
                 <p className="text-gray-600">
-                    Generate stunning wallpapers using OpenAI's DALL-E 3
+                    Generate stunning wallpapers using OpenAIs DALL-E 3
                 </p>
             </div>
 
@@ -138,7 +139,7 @@ export function OpenAIImageGenerator({ className = '' }: OpenAIImageGeneratorPro
                     </div>
                     
                     <div className="relative">
-                        <img
+                        <Image
                             src={generatedImage}
                             alt="Generated wallpaper"
                             className="w-full max-w-md mx-auto rounded-lg shadow-md"

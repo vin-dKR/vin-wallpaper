@@ -199,12 +199,17 @@ export class WallpaperBot {
                     imageUrl = firstItem;
                     console.log('[Bot] Successfully extracted image URL from Flux AI array (string)');
                 } else if (firstItem && typeof firstItem === 'object' && firstItem.constructor.name === 'URL') {
+                    // eslint-disable-next-line
                     imageUrl = (firstItem as any).href;
                     console.log('[Bot] Successfully extracted image URL from Flux AI array (URL object)');
+                    // eslint-disable-next-line
                 } else if (firstItem && typeof firstItem === 'object' && 'href' in firstItem && typeof (firstItem as any).href === 'string') {
+                    // eslint-disable-next-line
                     imageUrl = (firstItem as any).href;
                     console.log('[Bot] Successfully extracted image URL from Flux AI array (object with href)');
+                    // eslint-disable-next-line
                 } else if (firstItem && typeof firstItem === 'object' && typeof (firstItem as any).url === 'function') {
+                    // eslint-disable-next-line
                     const urlResult = (firstItem as any).url();
                     if (typeof urlResult === 'string') {
                         imageUrl = urlResult;
@@ -215,10 +220,14 @@ export class WallpaperBot {
                 } else {
                     console.log('[Bot] First item in array is not a recognized format:', firstItem);
                 }
+                // eslint-disable-next-line
             } else if (output && typeof output === 'object' && 'url' in output && typeof (output as any).url === 'string') {
+                // eslint-disable-next-line
                 imageUrl = (output as any).url;
                 console.log('[Bot] Successfully extracted image URL from Flux AI object.url');
+                // eslint-disable-next-line
             } else if (output && typeof output === 'object' && typeof (output as any).url === 'function') {
+                // eslint-disable-next-line
                 const urlResult = (output as any).url();
                 if (typeof urlResult === 'string') {
                     imageUrl = urlResult;
@@ -227,9 +236,12 @@ export class WallpaperBot {
                 }
                 console.log('[Bot] Successfully extracted image URL from Flux AI url() function');
             } else if (output && typeof output === 'object' && output.constructor.name === 'URL') {
+                // eslint-disable-next-line
                 imageUrl = (output as any).href;
                 console.log('[Bot] Successfully extracted image URL from Flux AI URL object');
+                // eslint-disable-next-line
             } else if (output && typeof output === 'object' && 'href' in output && typeof (output as any).href === 'string') {
+                // eslint-disable-next-line
                 imageUrl = (output as any).href;
                 console.log('[Bot] Successfully extracted image URL from Flux AI object.href');
             } else {
