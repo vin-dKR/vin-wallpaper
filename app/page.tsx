@@ -28,11 +28,11 @@ export default function Home() {
                             🖼️ Imagen-4 Generator
                         </TabsTrigger>
                     </TabsList>
-                    
+
                     <TabsContent value="twitter-bot" className="space-y-4">
-                <PostWallpaper />
+                        <PostWallpaper />
                     </TabsContent>
-                    
+
                     <TabsContent value="openai-generator" className="space-y-4">
                         <OpenAIImageGenerator />
                     </TabsContent>
