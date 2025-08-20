@@ -1,8 +1,10 @@
+import Navbar from "../navbar/Navbar";
 import Pattern from "./Dots";
 
 export default function Home() {
     return (
-        <div className="bg-blueBg relative mx-auto w-[94vw] md:w-[98vw] h-[90vh] md:h-[95vh] rounded-b-4xl overflow-hidden">
+        <div className="relative bg-blueBg relative mx-auto w-[94vw] md:w-[98vw] h-[90vh] md:h-[95vh] rounded-b-4xl overflow-hidden ">
+            <div className="absolute inset-0 border border-t-blueBg border-black/90 m-[1px] rounded-b-4xl" />
             <div
                 className="absolute inset-0 flex items-center justify-center"
                 style={{
@@ -33,6 +35,10 @@ export default function Home() {
 
                 {/* Pattern on top */}
                 <Pattern />
+            </div>
+
+            <div className="relative mt-5">
+                <Navbar />
             </div>
         </div>
 
