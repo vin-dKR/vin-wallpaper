@@ -9,8 +9,8 @@ const Top = ({ className }: { className: string }) => {
                     <path d="M40.4409 12.1106C36.9383 9.36042 32.6126 7.86824 28.1593 7.87401C23.7061 7.87977 19.3842 9.38314 15.8887 12.1423C12.3932 14.9015 9.92735 18.7562 8.88763 23.0864C7.84792 27.4166 8.29481 31.9706 10.1564 36.0161C12.018 40.0615 15.1862 43.3633 19.1513 45.3904C23.1165 47.4175 27.6482 48.0521 32.0176 47.1921C36.387 46.3321 40.3402 44.0275 43.2414 40.649C46.1426 37.2704 47.8232 33.0143 48.0128 28.5651L28.185 27.7198L40.4409 12.1106Z" fill="url(#paint1_linear_21_21)" />
                 </g>
                 <defs>
-                    <filter id="filter0_df_21_21" x="5.189" y="4.72385" width="45.9734" height="48.5121" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter0_df_21_21" x="5.189" y="4.72385" width="45.9734" height="48.5121" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dy="2.52011" />
                         <feGaussianBlur stdDeviation="1.26005" />
@@ -20,8 +20,8 @@ const Top = ({ className }: { className: string }) => {
                         <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_21_21" result="shape" />
                         <feGaussianBlur stdDeviation="1.26005" result="effect2_foregroundBlur_21_21" />
                     </filter>
-                    <filter id="filter1_df_21_21" x="5.81904" y="5.35389" width="44.7139" height="47.252" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter1_df_21_21" x="5.81904" y="5.35389" width="44.7139" height="47.252" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dy="2.52011" />
                         <feGaussianBlur stdDeviation="1.26005" />
@@ -32,12 +32,12 @@ const Top = ({ className }: { className: string }) => {
                         <feGaussianBlur stdDeviation="1.26005" result="effect2_foregroundBlur_21_21" />
                     </filter>
                     <linearGradient id="paint0_linear_21_21" x1="35.7453" y1="10.0791" x2="19.188" y2="35.183" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#D7D7D7" />
-                        <stop offset="1" stop-color="#515151" />
+                        <stop stopColor="#D7D7D7" />
+                        <stop offset="1" stopColor="#515151" />
                     </linearGradient>
                     <linearGradient id="paint1_linear_21_21" x1="19.5974" y1="9.82819" x2="41.8275" y2="55.415" gradientUnits="userSpaceOnUse">
-                        <stop offset="0.5" stop-color="white" />
-                        <stop offset="1" stop-color="#999999" />
+                        <stop offset="0.5" stopColor="white" />
+                        <stop offset="1" stopColor="#999999" />
                     </linearGradient>
                 </defs>
             </svg>

@@ -1,4 +1,3 @@
-
 const MiddleSandwich = ({ className }: { className: string }) => {
     return (
         <div className={className}>
@@ -7,8 +6,8 @@ const MiddleSandwich = ({ className }: { className: string }) => {
                     <rect x="3.29893" y="0.833771" width="50.4021" height="50.4021" rx="8.82037" fill="url(#paint0_linear_21_20)" />
                 </g>
                 <defs>
-                    <filter id="filter0_d_21_20" x="-122.706" y="-125.172" width="302.413" height="302.413" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <filter id="filter0_d_21_20" x="-122.706" y="-125.172" width="302.413" height="302.413" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                        <feFlood floodOpacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dy="2.52011" />
                         <feGaussianBlur stdDeviation="1.26005" />
@@ -19,8 +18,8 @@ const MiddleSandwich = ({ className }: { className: string }) => {
                     </filter>
                     <clipPath id="bgblur_0_21_20_clip_path" transform="translate(122.706 125.172)"><rect x="3.29893" y="0.833771" width="50.4021" height="50.4021" rx="8.82037" />
                     </clipPath><linearGradient id="paint0_linear_21_20" x1="28.815" y1="-9.87669" x2="28.815" y2="66.0415" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#020F6A" />
-                        <stop offset="1" stop-color="#041DD0" />
+                        <stop stopColor="#020F6A" />
+                        <stop offset="1" stopColor="#041DD0" />
                     </linearGradient>
                 </defs>
             </svg>

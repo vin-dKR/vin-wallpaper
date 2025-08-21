@@ -5,8 +5,8 @@ const Base = ({ className }: { className: string }) => {
                 <rect x="0.888733" y="0.423584" width="59.2225" height="59.2225" rx="13.2306" fill="url(#paint0_linear_21_18)" />
                 <defs>
                     <linearGradient id="paint0_linear_21_18" x1="30.5" y1="0.423584" x2="30.5" y2="59.6461" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#AFB8FF" />
-                        <stop offset="1" stop-color="#000D6E" />
+                        <stop stopColor="#AFB8FF" />
+                        <stop offset="1" stopColor="#000D6E" />
                     </linearGradient>
                 </defs>
             </svg>
