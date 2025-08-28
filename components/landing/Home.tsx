@@ -20,18 +20,26 @@ export default function Home() {
             >
                 {/* Glow blobs */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blueBg w-350 h-120 blur-[200px]" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blueBg w-350 h-120 blur-[200px]" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/40 w-350 h-120 blur-[200px]" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/40 w-150 h-60 blur-[200px]" />
-                    <div className="absolute top-[10%] left-[15%] bg-blueBg w-[300px] h-[120px] rounded-full blur-[180px]" />
-                    <div className="absolute top-[5%] right-[10%] bg-blueBg w-[260px] h-[100px] rounded-full blur-[150px]" />
-                    <div className="absolute bottom-[8%] left-[12%] bg-blueBg w-[400px] h-[160px] rounded-full blur-[220px]" />
-                    <div className="absolute bottom-[5%] right-[8%] bg-white w-[280px] h-[120px] rounded-full blur-[180px]" />
-                    <div className="absolute bottom-[-20%] left-1/4 bg-blueBg w-300 h-100 rounded-full blur-[100px]" />
-                    <div className="absolute top-[20%] left-1/2 -translate-x-1/2 bg-blueBg w-[320px] h-[140px] rounded-full blur-[200px]" />
+                    {/* Center big glows */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-blueBg w-[60vw] h-[40vh] blur-[8vh] rounded-full" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/40 w-[65vw] h-[15vh] blur-[10vh] rounded-full" />
+
+                    {/* Corner glows */}
+                    <div className="absolute top-[10%] left-[15%] bg-blueBg w-[30vw] h-[17vh] rounded-full blur-[5vh]" />
+                    <div className="absolute top-[5%] right-[10%] bg-blueBg w-[22vw] h-[10vh] rounded-full blur-[4vh]" />
+                    <div className="absolute bottom-[8%] left-[12%] bg-blueBg w-[28vw] h-[14vh] rounded-full blur-[5vh]" />
+                    <div className="absolute bottom-[5%] right-[8%] bg-white w-[22vw] h-[10vh] rounded-full blur-[12vh]" />
+
+                    {/* Bottom big glow */}
+                    <div className="absolute bottom-[-10%] left-1/4 bg-blueBg w-[26vw] h-[12vh] rounded-full blur-[10vh]" />
+
+                    {/* Top center */}
+                    <div className="absolute top-[20%] left-1/2 -translate-x-1/2 bg-blueBg w-[28vw] h-[12vh] rounded-full blur-[5vh]" />
                 </div>
-                <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-350 h-180 md:h-220 blur-[200px]" />
+
+                {/* Background white glow */}
+                <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white w-[40vw] h-[30vh] md:h-[40vh] blur-[15vh]" />
+
 
                 {/* Pattern on top */}
                 <Pattern />

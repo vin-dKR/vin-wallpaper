@@ -1,39 +1,67 @@
-import Image from "next/image"
-import RenderSVG from "../landing/svgsElements/logo/RenderSVG"
+"use client"
+import { useState } from "react"
 import RenderSVGLogo from "../landing/svgsElements/logo/RenderSVG"
 import RenderSvgUser from "../landing/svgsElements/user/RenderSvg"
 
 const Navbar = () => {
-    const navItems = [
-        {
-            id: 1,
-            item: "Features",
-        }, {
-            id: 2,
-            item: "Pricing",
-        }, {
-            id: 3,
-            item: "Showcase",
-        },
-    ]
-    return (
-        <div className="flex items-center justify-center space-x-45 w-full t-4 gap-2 mx-auto">
-            <RenderSVGLogo />
+    const [isOpen, setIsOpen] = useState(false)
 
-            <div className="relative rounded-xl p-[1px] bg-gradient-to-b from-white to-blue-950 overlow-hidden">
-                <div className="flex flex-row gap-20 px-10 py-2 rounded-xl backdrop-blur-3xl bg-gradient-to-b from-white/50 from-2% via-blue-800 to-indigo-900">
+    const navItems = [
+        { id: 1, item: "Features" },
+        { id: 2, item: "Pricing" },
+        { id: 3, item: "Showcase" },
+    ]
+
+    return (
+        <nav className="w-full px-4 py-3 bg-transparent">
+            <div className="flex items-center justify-between max-w-7xl mx-auto">
+                {/* Left Logo */}
+                <RenderSVGLogo />
+
+                {/* Desktop Menu */}
+                <div className="hidden md:flex relative rounded-xl p-[1px] bg-gradient-to-b from-white to-blue-950">
+                    <div className="flex flex-row gap-20 px-20 py-2 rounded-xl backdrop-blur-3xl bg-gradient-to-b from-white/50 via-blue-800 to-indigo-900">
+                        {navItems.map((navItem) => (
+                            <div
+                                key={navItem.id}
+                                className="text-xl cursor-pointer hover:text-blue-300 transition"
+                            >
+                                {navItem.item}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Right User Icon (always visible) */}
+                <div>
+                    <RenderSvgUser />
+                </div>
+
+                {/* Hamburger for Mobile */}
+                <button
+                    className="md:hidden flex flex-col space-y-1 ml-4"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    <span className="w-6 h-0.5 bg-white"></span>
+                    <span className="w-6 h-0.5 bg-white"></span>
+                    <span className="w-6 h-0.5 bg-white"></span>
+                </button>
+            </div>
+
+            {/* Mobile Menu (dropdown) */}
+            {isOpen && (
+                <div className="md:hidden mt-3 flex flex-col items-center gap-4 rounded-xl backdrop-blur-3xl bg-gradient-to-b from-white/50 via-blue-800 to-indigo-900 py-4">
                     {navItems.map((navItem) => (
-                        <div key={navItem.id} className="text-xl text-shadow-lg cursor-pointer">
+                        <div
+                            key={navItem.id}
+                            className="text-lg cursor-pointer hover:text-blue-300 transition"
+                        >
                             {navItem.item}
                         </div>
                     ))}
                 </div>
-            </div>
-
-
-            <RenderSvgUser />
-        </div>
-
+            )}
+        </nav>
     )
 }
 

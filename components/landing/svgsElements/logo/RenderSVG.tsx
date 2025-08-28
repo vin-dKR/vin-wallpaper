@@ -6,7 +6,7 @@ const RenderSVGLogo = () => {
     return (
         <div className="relative w-15 h-15 scale-80">
             <Base className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <MiddleSandwich className="absolute mt-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-md" />
+            <MiddleSandwich className="absolute mt-[2px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             <Top className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </div>
     )
