@@ -1,5 +1,7 @@
 import Image from "next/image"
 import RenderSVG from "../landing/svgsElements/logo/RenderSVG"
+import RenderSVGLogo from "../landing/svgsElements/logo/RenderSVG"
+import RenderSvgUser from "../landing/svgsElements/user/RenderSvg"
 
 const Navbar = () => {
     const navItems = [
@@ -16,7 +18,7 @@ const Navbar = () => {
     ]
     return (
         <div className="flex items-center justify-center space-x-45 w-full t-4 gap-2 mx-auto">
-            <RenderSVG />
+            <RenderSVGLogo />
 
             <div className="relative rounded-xl p-[1px] bg-gradient-to-b from-white to-blue-950 overlow-hidden">
                 <div className="flex flex-row gap-20 px-10 py-2 rounded-xl backdrop-blur-3xl bg-gradient-to-b from-white/50 from-2% via-blue-800 to-indigo-900">
@@ -29,13 +31,7 @@ const Navbar = () => {
             </div>
 
 
-            <Image
-                src="/imgs/user-logo.png"
-                alt="User Logo"
-                width={45}
-                height={45}
-                className="object-contain cursor-pointer"
-            />
+            <RenderSvgUser />
         </div>
 
     )

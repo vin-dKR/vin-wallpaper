@@ -1,8 +1,8 @@
 import Base from "./Base"
-import MiddleSandwich from "./MiddleSandwich"
+import MiddleSandwich from "../logo/MiddleSandwich"
 import Top from "./Top"
 
-const RenderSVGLogo = () => {
+const RenderSvgUser = () => {
     return (
         <div className="relative w-15 h-15 scale-80">
             <Base className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -12,4 +12,4 @@ const RenderSVGLogo = () => {
     )
 }
 
-export default RenderSVGLogo
+export default RenderSvgUser

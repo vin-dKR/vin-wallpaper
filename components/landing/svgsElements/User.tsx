@@ -24,7 +24,7 @@ export default function UserLogo() {
                     <rect x="4.93811" y="5.04796" width="40.8701" height="48.2057" fill="url(#pattern0_21_121)" />
                 </g>
                 <defs>
-                    <filter id="filter0_d_21_121" x="-100.381" y="-97.1273" width="251.508" height="251.508" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <filter id="filter0_d_21_121" x="-100.381" y="-97.1273" width="251.508" height="251.508" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                         <feFlood flood-opacity="0" result="BackgroundImageFix" />
                         <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
                         <feOffset dy="2.0959" />
@@ -35,7 +35,7 @@ export default function UserLogo() {
                         <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_21_121" result="shape" />
                     </filter>
                     <clipPath id="bgblur_0_21_121_clip_path" transform="translate(100.381 97.1273)"><rect x="4.41418" y="7.66783" width="41.918" height="41.918" rx="7.33566" />
-                    </clipPath><filter id="filter1_f_21_121" x="0.746306" y="0.856154" width="49.2537" height="56.5894" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    </clipPath><filter id="filter1_f_21_121" x="0.746306" y="0.856154" width="49.2537" height="56.5894" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                         <feFlood flood-opacity="0" result="BackgroundImageFix" />
                         <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                         <feGaussianBlur stdDeviation="2.0959" result="effect1_foregroundBlur_21_121" />
