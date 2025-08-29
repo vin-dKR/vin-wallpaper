@@ -4,7 +4,7 @@ const BlurredText = () => (
             {/* First word with blur */}
             <div className="relative text-blur">
                 <span
-                    className="text-[clamp(1em,10vw,90px)] text-white relative z-5"
+                    className="text-[clamp(1em,5vw,90px)] text-white relative z-5"
                     style={{
                         WebkitMaskImage: 'linear-gradient(to bottom, white 0%, white 30%, transparent 100%)',
                         maskImage: 'linear-gradient(to bottom, white 0%, white 50%, transparent 100%)',
@@ -13,7 +13,7 @@ const BlurredText = () => (
                     quick
                 </span>
                 <div
-                    className="absolute top-0 left-0 text-[clamp(1em,10vw,90px)] text-white pointer-events-none w-full"
+                    className="absolute top-0 left-0 text-[clamp(1em,5vw,90px)] text-white pointer-events-none w-full"
                     style={{
                         WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, white 20%, white 100%)',
                         maskImage: 'linear-gradient(to bottom, transparent 0%, white 50%, white 100%)',
@@ -28,13 +28,13 @@ const BlurredText = () => (
 
             {/* Middle parallelogram */}
             <span className="parallelogram">
-                <span className="parallelogram-text pl-1 pr-2 lg:pr-4 italic">x.com</span>
+                <span className="parallelogram-text pl-1 pr-2 lg:pr-4 italic text-[clamp(1em,5vw,90px)]">x.com</span>
             </span>
 
             {/* Last word with blur */}
             <div className="relative text-blur">
                 <span
-                    className="text-[clamp(1em,10vw,90px)] text-white relative z-5"
+                    className="text-[clamp(1em,5vw,90px)] text-white relative z-5"
                     style={{
                         WebkitMaskImage: 'linear-gradient(to bottom, white 0%, white 30%, transparent 100%)',
                         maskImage: 'linear-gradient(to bottom, white 0%, white 50%, transparent 100%)',
@@ -43,7 +43,7 @@ const BlurredText = () => (
                     image bot
                 </span>
                 <div
-                    className="absolute top-0 left-0 text-[clamp(1em,10vw,90px)] text-white pointer-events-none w-full"
+                    className="absolute top-0 left-0 text-[clamp(1em,5vw,90px)] text-white pointer-events-none w-full"
                     style={{
                         WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, white 20%, white 100%)',
                         maskImage: 'linear-gradient(to bottom, transparent 0%, white 50%, white 100%)',
