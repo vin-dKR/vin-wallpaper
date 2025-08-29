@@ -13,6 +13,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-epilouge: "Epilogue", "sans-serif";
+  --font-epilougeThin: "EpilogueThin", "sans-serif";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -45,4 +46,37 @@ body {
     font-weight: 500;
     font-display: swap;
     src: url("/fonts/Epilogue.ttf")
+}
+
+@font-face {
+    font-family: EpilogueThin;
+    font-style: thin;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/Epilogue.ttf")
+}
+
+
+//cutom-css class
+.text-blur {
+  @apply relative inline-block;
+}
+
+
+.parallelogram {
+  @apply inline-block;
+  line-height: 1.15; /* Match surrounding text */
+  height: 1.15em; /* Constrain to line height */
+  vertical-align: top; /* Align with flex items */
+  transform: skewX(-15deg); /* Example parallelogram effect */
+  overflow: hidden; /* Prevent transform from increasing height */
+  background: white;
+  color:blue;
+}
+
+.parallelogram-text {
+  @apply inline-block;
+  line-height: 1.15; /* Match surrounding text */
+  transform: skewX(15deg); /* Counter-transform to keep text upright */
+  text-align: center;
 }

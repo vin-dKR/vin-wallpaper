@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react"
-import RenderSVGLogo from "../landing/svgsElements/logo/RenderSVG"
-import RenderSvgUser from "../landing/svgsElements/user/RenderSvg"
+import RenderSVGLogo from "./svgsElements/logo/RenderSVG"
+import RenderSvgUser from "./svgsElements/user/RenderSvg"
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -13,7 +13,7 @@ const Navbar = () => {
     ]
 
     return (
-        <nav className="w-full px-4 py-3 bg-transparent">
+        <nav className="w-full px-4 bg-transparent">
             <div className="flex items-center justify-between max-w-7xl mx-auto">
                 {/* Left Logo */}
                 <RenderSVGLogo />
@@ -33,9 +33,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Right User Icon (always visible) */}
-                <div>
-                    <RenderSvgUser />
-                </div>
+                <RenderSvgUser />
 
                 {/* Hamburger for Mobile */}
                 <button

@@ -1,5 +1,6 @@
 import Navbar from "../navbar/Navbar";
-import Pattern from "./Dots";
+import BlurredText from "./homeComponents/BlurredText";
+import Pattern from "./homeComponents/Dots";
 
 export default function Home() {
     return (
@@ -48,6 +49,10 @@ export default function Home() {
             <div className="relative mt-5">
                 <Navbar />
             </div>
+
+
+            <BlurredText />
+
         </div>
 
     )
