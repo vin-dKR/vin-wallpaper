@@ -44,7 +44,7 @@ const CTADetails = () => {
                         <div className="col-span-2 py-10 md:py-20 px-10 md:px-30">
                             <h1 className="text-3xl md:text-6xl text-white text-shadow-md font-bold">Your Bot is Ready. Just Plug In Your 𝕏 Keys.</h1>
 
-                            <p className="text-xl md:text-3xl mt-10 md:mt-20 text-shadow-md">We handle everything. All you need is your 𝕏 API Token & Secret Key — you're good to go.</p>
+                            <p className="text-xl md:text-3xl mt-10 md:mt-20 text-shadow-md">We handle everything. All you need is your 𝕏 API Token & Secret Key — you&apos;re good to go.</p>
 
                             <GradientButton
                                 text="integrate bot to your X account"
