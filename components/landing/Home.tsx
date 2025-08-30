@@ -1,3 +1,5 @@
+"use client"
+
 import GradientButton from "../customReusableUi/GradientButton";
 import Navbar from "../navbar/Navbar";
 import BlurredText from "./homeComponents/BlurredText";
@@ -6,7 +8,7 @@ import TagMessges from "./homeComponents/TagMessage";
 
 export default function Home() {
     return (
-        <div className="relative bg-blueBg relative mx-auto w-[94vw] md:w-[98vw] h-[90vh] md:h-[95vh] rounded-b-4xl overflow-hidden ">
+        <div className="relative bg-blueBg relative mx-auto w-full h-[90vh] md:h-[95vh] rounded-b-4xl overflow-hidden ">
             <div className="absolute inset-0 border border-t-blueBg border-black/90 m-[1px] rounded-b-4xl" />
             <div
                 className="absolute inset-0 flex items-center justify-center"
@@ -55,7 +57,10 @@ export default function Home() {
 
             <TagMessges />
             <BlurredText />
-            <GradientButton text="Integrate your X account now" />
+            <GradientButton
+                text="Integrate your X account now"
+                onClick={() => console.log("hii frmo landing/Home.tsx")}
+            />
 
         </div>
 
