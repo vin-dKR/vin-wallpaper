@@ -1,5 +1,5 @@
 const BlurredText = () => (
-    <div className="absolute inset-0 flex items-center justify-center">
+    <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div className="flex items-center flex-col md:flex-row gap-0 md:gap-6 py-4 rounded-xl text-lg md:text-[5vw] font-epilougeThin">
             {/* First word with blur */}
             <div className="relative text-blur">

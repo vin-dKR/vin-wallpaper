@@ -1,6 +1,8 @@
+import GradientButton from "../customReusableUi/GradientButton";
 import Navbar from "../navbar/Navbar";
 import BlurredText from "./homeComponents/BlurredText";
 import Pattern from "./homeComponents/Dots";
+import TagMessges from "./homeComponents/TagMessage";
 
 export default function Home() {
     return (
@@ -51,7 +53,9 @@ export default function Home() {
             </div>
 
 
+            <TagMessges />
             <BlurredText />
+            <GradientButton text="Integrate your X account now" />
 
         </div>
 
