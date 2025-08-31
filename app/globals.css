@@ -6,7 +6,17 @@
 }
 
 @theme {
-    --color-blueBg: #1A14CB
+    --color-blueBg: #1A14CB;
+    --animate-shine: shine 5s linear infinite;
+
+    @keyframes shine {
+        0% {
+            background-position: 200%;
+        }
+        100% {
+            background-position: -200%;
+        }
+    }
 }
 
 @theme inline {

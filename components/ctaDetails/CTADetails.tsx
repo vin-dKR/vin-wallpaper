@@ -10,7 +10,7 @@ const CTADetails = () => {
         <div className="mt-40">
             <h1 className="text-center text-xl md:text-5xl text-black font-black">Integrate in just 1 step</h1>
 
-            <div className="relative mt-10 h-200 rounded-4xl overflow-hidden">
+            <div className="relative mt-10 h-200 rounded-4xl overflow-hidden border-2">
                 <div className="absolute inset-0 z-10 opacity-20 sm:opacity-10">
                     <Pattern />
                 </div>
@@ -46,12 +46,15 @@ const CTADetails = () => {
 
                             <p className="text-xl md:text-3xl mt-10 md:mt-20 text-shadow-md">We handle everything. All you need is your 𝕏 API Token & Secret Key — you&apos;re good to go.</p>
 
-                            <GradientButton
-                                text="integrate bot to your X account"
-                                onClick={() => console.log("hii")}
-                                className="relative"
-                            />
+                            <div className="relative w-full bg-gray-200 mt-25">
+                                <GradientButton
+                                    text="integrate bot to your X account"
+                                    position="left"
+                                    onClick={() => alert("Left!")}
+                                />
+                            </div>
                         </div>
+
                         <div className="">
                         </div>
                     </div>

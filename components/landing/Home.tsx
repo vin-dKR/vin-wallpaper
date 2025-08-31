@@ -57,10 +57,12 @@ export default function Home() {
 
             <TagMessges />
             <BlurredText />
-            <GradientButton
-                text="Integrate your X account now"
-                onClick={() => console.log("hii frmo landing/Home.tsx")}
-            />
+            <div className="absolute top-2/3 left-1/2 w-full -translate-x-1/2">
+                <GradientButton
+                    text="Integrate your X account now"
+                    onClick={() => console.log("hii frmo landing/Home.tsx")}
+                />
+            </div>
 
         </div>
 
