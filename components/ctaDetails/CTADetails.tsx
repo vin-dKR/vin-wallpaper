@@ -10,7 +10,7 @@ const CTADetails = () => {
         <div className="mt-40">
             <h1 className="text-center text-xl md:text-5xl text-black font-black">Integrate in just 1 step</h1>
 
-            <div className="relative mt-10 h-200 rounded-4xl overflow-hidden border-2">
+            <div className="relative mt-10 h-200 rounded-4xl overflow-hidden border-2 border-blue-900/50 md:border-black/10">
                 <div className="absolute inset-0 z-10 opacity-20 sm:opacity-10">
                     <Pattern />
                 </div>
