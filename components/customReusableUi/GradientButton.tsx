@@ -46,7 +46,6 @@ const GradientButton = ({
                             speed={3}
                             className=''
                         />
-
                     </span>
                 </div>
             </div>
