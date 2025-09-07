@@ -3,6 +3,7 @@
 import Home from "@/components/landing/Home";
 import CTADetails from "@/components/ctaDetails/CTADetails";
 import Gallary from "@/components/gallary/Gallary";
+import Footer from "@/components/footer/Footer";
 
 export default function Page() {
     return (
@@ -10,6 +11,7 @@ export default function Page() {
             <Home />
             <CTADetails />
             <Gallary />
+            <Footer />
         </div>
     )
 }
