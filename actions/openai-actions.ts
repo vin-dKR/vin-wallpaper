@@ -11,7 +11,7 @@ interface OpenAIGenerationResult {
 
 export async function generateImageWithOpenAI(prompt: string): Promise<OpenAIGenerationResult> {
     console.log('[OpenAI] Starting image generation with prompt:', prompt);
-    
+
     try {
         // Check if API key is available
         const apiKey = process.env.OPENAI_API_KEY;
@@ -28,7 +28,7 @@ export async function generateImageWithOpenAI(prompt: string): Promise<OpenAIGen
         const enhancedPrompt = `${prompt}, high resolution, detailed, professional quality, sharp focus, 4k, mobile wallpaper style, 9:16 aspect ratio, digital art`;
 
         console.log('[OpenAI] Sending request to OpenAI API...');
-        
+
         // Generate image using OpenAI DALL-E
         const response = await openai.images.generate({
             model: "gpt-4o-mini",
@@ -49,7 +49,7 @@ export async function generateImageWithOpenAI(prompt: string): Promise<OpenAIGen
         }
 
         console.log('[OpenAI] Image generated successfully');
-        
+
         return {
             success: true,
             imageUrl,
@@ -59,7 +59,7 @@ export async function generateImageWithOpenAI(prompt: string): Promise<OpenAIGen
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         console.error(`[OpenAI] ERROR in generateImageWithOpenAI: ${errorMessage}`);
-        
+
         return {
             success: false,
             error: `OpenAI image generation failed: ${errorMessage}`
@@ -69,15 +69,79 @@ export async function generateImageWithOpenAI(prompt: string): Promise<OpenAIGen
 
 export async function generateRandomImageWithOpenAI(): Promise<OpenAIGenerationResult> {
     const randomPrompts = [
-        "A stunning portrait of a beautiful woman with flowing hair, soft golden lighting, pastel colors, ultra-clear focus, aesthetic composition, elegant pose, cinematic photography",
-        "An anime girl gazing at a starry night sky, neon-lit cyberpunk cityscape in background, soft shading, high contrast, 4k anime art style, clear focus, vibrant colors",
-        "A heroic character standing on a rooftop at sunset, sprawling city behind them, dramatic lighting, cinematic wallpaper, inspired by modern superhero aesthetics",
-        "A cozy aesthetic photo of coffee and an open book near a window, moody lighting, warm tones, high detail, clean composition, peaceful atmosphere",
-        "A surreal dreamscape with floating islands connected by bridges, vivid colors, clean rendering, perfect symmetry, 4k fantasy art, magical atmosphere",
-        "An elegant landscape with soft gradients and fluffy clouds, simple color palette, calming tones, minimalism, peaceful zen-like composition",
-        "A nature scene with blooming flowers, colorful butterflies, and warm sunlight filtering through trees, high clarity, warm tones, smooth details",
-        "Ultra-aesthetic abstract waves in pastel tones, 3D render style, smooth gradients, ultra HD, modern digital art, flowing motion"
+        // === ANIME GIRLS (TOP REACH) ===
+        "Vertical anime girl wallpaper, soft pastel lighting, close-up face, big expressive eyes, clean background, dreamy aesthetic, ultra-sharp focus, 4k",
+        "Anime girl standing by rainy window at night, city lights bokeh, neon reflections, cozy mood, cinematic anime lighting, vertical phone wallpaper",
+        "Cyberpunk anime girl under neon signs, purple and blue color palette, rain particles, glowing eyes, ultra-detailed anime illustration",
+        "Anime girl looking at starry sky from rooftop, wind-blown hair, moonlight glow, minimal background, wallpaper composition",
+        "Cute anime girl in oversized hoodie, soft lo-fi lighting, clean pastel background, aesthetic phone wallpaper",
+
+        // === BEAUTIFUL WOMEN (MASS APPEAL) ===
+        "Cinematic portrait of a beautiful woman, soft golden hour light, shallow depth of field, elegant pose, ultra HD wallpaper",
+        "Moody aesthetic female portrait, side lighting, dark background, cinematic photography style, phone wallpaper crop",
+        "Elegant woman with flowing hair, pastel tones, clean minimal background, high-fashion aesthetic wallpaper",
+        "Neon-lit female portrait, cyberpunk lighting, pink and blue glow, cinematic mood, ultra-clear focus",
+
+        // === JAPANESE CULTURE (HIGH SAVE RATE) ===
+        "Japanese street at night, glowing paper lanterns, rain reflections, cinematic framing, vertical wallpaper",
+        "Cherry blossom trees in full bloom, soft pink petals falling, blue sky, peaceful Japanese aesthetic",
+        "Torii gate in misty forest, early morning fog, soft light rays, spiritual zen wallpaper",
+        "Tokyo cyberpunk alley, neon kanji signs, rain-soaked street, ultra-detailed night wallpaper",
+
+        // === CYBERPUNK / FUTURISTIC (DESKTOP FAVORITE) ===
+        "Cyberpunk city skyline at night, neon skyscrapers, flying cars, purple-blue palette, ultra-wide wallpaper",
+        "Rainy futuristic street, neon reflections, lone figure walking, cinematic sci-fi mood",
+        "Futuristic megacity viewed from rooftop, glowing lights, dramatic clouds, epic scale wallpaper",
+
+        // === COZY / LIFESTYLE (SAVE FARMER) ===
+        "Cozy coffee cup by rainy window, warm lamp light, soft shadows, aesthetic phone wallpaper",
+        "Late-night study desk, laptop glow, books, soft warm lighting, cozy aesthetic wallpaper",
+        "Minimal bedroom at night, city lights outside window, calm cozy vibe, clean composition",
+
+        // === SPACE / SKY (HIGH VISUAL IMPACT) ===
+        "Astronaut floating in space, Earth glowing in background, cinematic lighting, ultra HD wallpaper",
+        "Milky Way galaxy above mountain silhouette, long exposure style, night sky wallpaper",
+        "Surreal planets aligned in colorful space, soft glow, minimal composition",
+
+        // === ADVENTURE / FANTASY ===
+        "Lone adventurer standing on cliff edge, massive fantasy landscape, epic scale, cinematic light",
+        "Floating islands above clouds, golden sunset light, fantasy dreamscape wallpaper",
+        "Magical bridge leading into glowing portal, surreal fantasy art, ultra-detailed",
+
+        // === BEACH / HOLIDAY ===
+        "Tropical beach at sunset, palm trees silhouette, golden sky, calm ocean, peaceful wallpaper",
+        "Ocean waves crashing under pastel sunset sky, minimal beach aesthetic",
+        "Coastal road with vintage car, summer holiday vibe, warm cinematic light",
+
+        // === CITIES / CARS ===
+        "Rainy city street at night, reflections on asphalt, cinematic photography wallpaper",
+        "Luxury sports car parked under neon lights, cyberpunk city vibe, ultra HD",
+        "Modern city skyline at blue hour, glowing windows, clean wallpaper composition",
+
+        // === NATURE / FOREST ===
+        "Misty forest with sun rays through trees, magical morning light, ultra-detailed nature wallpaper",
+        "Autumn forest path covered in golden leaves, cozy nature aesthetic",
+        "Mountain lake with perfect reflection, calm zen landscape wallpaper",
+
+        // === BIRDS / SKY ELEMENTS ===
+        "Birds flying across dramatic sunset sky, silhouette composition, minimal wallpaper",
+        "Eagle soaring above mountains, cinematic wildlife photography style",
+
+        // === ABSTRACT / CREATIVE ===
+        "Smooth abstract waves in pastel colors, soft gradients, modern aesthetic wallpaper",
+        "Minimal geometric abstract design, neon glow accents, dark background",
+        "Surreal abstract shapes floating in soft light, ultra HD digital art",
+
+        // === PAINTING STYLE ===
+        "Oil painting style fantasy landscape, rich brush strokes, warm colors",
+        "Impressionist city street painting at night, glowing lights",
+
+        // === QUOTE BACKGROUNDS (UTILITY CONTENT) ===
+        "Minimal pastel gradient background with soft light for quote wallpaper",
+        "Calm sky with subtle clouds, empty center space for inspirational quote",
+        "Nature-inspired minimal wallpaper designed for daily motivation text"
     ];
+
 
     const randomPrompt = randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
     return generateImageWithOpenAI(randomPrompt);
