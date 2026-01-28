@@ -2,14 +2,17 @@ import Header from "@/components/landing2/Header";
 
 export default function Hero() {
     return (
-        <div className="relative w-full min-h-[500px] overflow-hidden bg-[#0C0817]">
+        <div className="relative w-full min-h-screen overflow-hidden bg-[#0C0817]">
             <Header />
 
-            <div className="flex items-center justify-center h-full px-6">
-                <h1 className="text-white text-center font-bold text-5xl max-w-4xl">
-                    @vin_wallpaper – Your X account,<br />
-                    now an AI factory.
-                </h1>
+            {/* Using grid for perfect centering */}
+            <div className="grid place-items-center min-h-screen px-6">
+                <div className="text-center"> {/* Adjust -mt-20 based on your header height */}
+                    <h1 className="text-white font-bold text-5xl md:text-6xl lg:text-7xl max-w-4xl leading-tight">
+                        @vin_wallpaper – Your X account,<br />
+                        now an AI factory.
+                    </h1>
+                </div>
             </div>
 
         </div>
